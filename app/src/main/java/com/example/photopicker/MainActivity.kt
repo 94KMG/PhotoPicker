@@ -51,28 +51,28 @@ fun MainScreen(modifier: Modifier = Modifier) {
 
     ) {
         var imageId by remember {
-            mutableStateOf(R.drawable.infp)
+            mutableStateOf(R.drawable.istp)
         }
         var imageUri by remember {
             mutableStateOf<Uri?>(null)
         }
         //save
-        val pickMedia =
-            rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-                imageUri = uri
-            }
+
         Image(
             modifier = modifier.height(300.dp),
-            painter = rememberAsyncImagePainter(imageUri),
-            contentDescription = "INFP"
+//            painter = rememberAsyncImagePainter(imageUri),
+            painter = painterResource(id = imageId),
+            contentDescription = "ISTP"
         )
         Button(onClick = {
-            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-            if (imageId == R.drawable.infp) {
-                imageId = R.drawable.ic_launcher_foreground
-            } else {
-                imageId = R.drawable.infp
+//            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            when (imageId) {
+                R.drawable.istp -> imageId = R.drawable.entj
+                R.drawable.entj -> imageId = R.drawable.entp
+                R.drawable.entp -> imageId = R.drawable.estp
+                R.drawable.estp -> imageId = R.drawable.entj
             }
+
 
         }) {
             Text(text = "변경")

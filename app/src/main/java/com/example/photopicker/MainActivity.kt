@@ -59,16 +59,21 @@ fun MainScreen(modifier: Modifier = Modifier) {
         var imageUri by remember {
             mutableStateOf<Uri?>(null)
         }
+
+        var imageBlur by remember {
+            mutableStateOf(modifier)
+        }
         //save
 
         Image(
             painter = painterResource(id = imageId),
 //            painter = rememberAsyncImagePainter(imageUri),
-            modifier = modifier.blur(
-                radiusX = 10.dp,
-                radiusY = 10.dp,
-                edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(8.dp))
-            ),
+//            modifier = modifier.blur(
+//                radiusX = 10.dp,
+//                radiusY = 10.dp,
+//                edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(8.dp))
+//            ),
+            modifier = imageBlur,
             contentDescription = null
         )
         Button(onClick = {
@@ -77,13 +82,28 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 R.drawable.istp -> imageId = R.drawable.entj
                 R.drawable.entj -> imageId = R.drawable.entp
                 R.drawable.entp -> imageId = R.drawable.estp
-                R.drawable.estp -> imageId = R.drawable.entj
+                R.drawable.estp -> imageId = R.drawable.istp
             }
 
 
         }) {
             Text(text = "변경")
 
+        }
+
+        Button(onClick = {
+            if (imageBlur == modifier) {
+                imageBlur =
+                modifier.blur(
+                    radiusX = 10.dp,
+                    radiusY = 10.dp,
+                    edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(8.dp))
+                )
+            }else{
+                imageBlur = modifier
+            }
+        }) {
+            Text(text = "흐림")
         }
     }
 }
